@@ -70,12 +70,12 @@ transparent = (0, 1, 0)
 
 def misty_sat():
     cat_image = pygame.image.load("photos/i.png").convert_alpha()
-    cat_image = pygame.transform.scale_by(cat_image, 0.5)
+    cat_image = pygame.transform.scale_by(cat_image, 0.4)
     return cat_image
 
 def misty_sleep():
     cat_image = pygame.image.load("photos/Picture7.png").convert_alpha()
-    cat_image = pygame.transform.scale_by(cat_image, 0.09)
+    cat_image = pygame.transform.scale_by(cat_image, 0.05)
     return cat_image
 
 hwnd = pygame.display.get_wm_info()["window"]
@@ -86,7 +86,7 @@ win32gui.SetLayeredWindowAttributes(hwnd, win32api.RGB(*transparent), 0, win32co
 
 
 misty_position = muli(window_size,0.5)
-misty_velocity = (70,70)
+misty_velocity = (3,1)
 
 running = True
 tick = 0
@@ -115,13 +115,13 @@ while running:
             mistySleepy = True
 
         #misty_position = addi(misty_position,(random.randrange(-10,10),random.randrange(-10,10)))
-        #misty_position = addi(misty_position, misty_velocity)
-        #if misty_position[1] + misty_size[1] > window_size[1] or misty_position[1] < 0:
-            #misty_velocity = (misty_velocity[0]+random.randrange(-5,5), -misty_velocity[1])
-            #pass
-        #if misty_position[0] + misty_size[0] > window_size[0] or misty_position[0] < 0:
-            #misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
-            #pass
+        misty_position = addi(misty_position, misty_velocity)
+        if misty_position[1] + misty_size[1] > window_size[1] or misty_position[1] < 0:
+            misty_velocity = (misty_velocity[0]+random.randrange(-5,5), -misty_velocity[1])
+            pass
+        if misty_position[0] + misty_size[0] > window_size[0] or misty_position[0] < 0:
+            misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
+            pass
 
     # Update the display
     pygame.display.flip()
