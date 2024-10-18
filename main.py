@@ -123,6 +123,22 @@ while running:
             misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
             pass
 
+    #misty_position = addi(misty_position, (0,1))
+    #misty_position = addi(misty_position,(random.randrange(-10,10),random.randrange(-10,10)))
+    misty_position = addi(misty_position, misty_velocity)
+    if misty_position[1] + misty_size[1] > window_size[1] or misty_position[1] < 0:
+        misty_velocity = (misty_velocity[0]+random.randrange(-5,5), -misty_velocity[1])
+        if misty_position[1] > window_size[1]/2:
+            misty_position = (misty_position[0], window_size[1]-misty_size[1])
+        else:
+            misty_position = (misty_position[0], 0)
+        pass
+    if misty_position[0] + misty_size[0] > window_size[0] or misty_position[0] < 0:
+        misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
+        if misty_position[0] > window_size[0]/2:
+            misty_position = (window_size[0]-misty_size[0], misty_position[1])
+        else:
+            misty_position = (0, misty_position[1])
     # Update the display
     pygame.display.flip()
     if tick % 10 == 0:
