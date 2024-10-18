@@ -68,10 +68,15 @@ screen = pygame.display.set_mode(window_size, pygame.NOFRAME | pygame.SRCALPHA)
 
 transparent = (0, 1, 0)
 
+def misty_sat():
+    cat_image = pygame.image.load("photos/i.png").convert_alpha()
+    cat_image = pygame.transform.scale_by(cat_image, 0.5)
+    return cat_image
 
-cat_image = pygame.image.load("photos/i.png").convert_alpha()
-cat_image = pygame.transform.scale_by(cat_image, 0.5)
-misty_size = (cat_image.get_width(),cat_image.get_height())
+def misty_sleep():
+    cat_image = pygame.image.load("photos/Picture7.png").convert_alpha()
+    cat_image = pygame.transform.scale_by(cat_image, 0.09)
+    return cat_image
 
 hwnd = pygame.display.get_wm_info()["window"]
 win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
@@ -85,6 +90,7 @@ misty_velocity = (70,70)
 
 running = True
 tick = 0
+mistySleepy = False
 while running:
     screen.fill(transparent)
     
@@ -92,7 +98,30 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     # Blit the cat image onto the screen
-    screen.blit(cat_image, misty_position)
+    if mistySleepy:
+        cat_image = misty_sleep()
+        misty_size = (cat_image.get_width(),cat_image.get_height())   
+        screen.blit(cat_image, misty_position) 
+
+        if random.randint(0, 1000) == 9:
+            mistySleepy = False
+    else:
+        cat_image = misty_sat()
+        misty_size = (cat_image.get_width(),cat_image.get_height())        
+        screen.blit(cat_image, misty_position)
+
+        #make misty randomly have a nap
+        if random.randint(0, 1000) == 9:
+            mistySleepy = True
+
+        #misty_position = addi(misty_position,(random.randrange(-10,10),random.randrange(-10,10)))
+        #misty_position = addi(misty_position, misty_velocity)
+        #if misty_position[1] + misty_size[1] > window_size[1] or misty_position[1] < 0:
+            #misty_velocity = (misty_velocity[0]+random.randrange(-5,5), -misty_velocity[1])
+            #pass
+        #if misty_position[0] + misty_size[0] > window_size[0] or misty_position[0] < 0:
+            #misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
+            #pass
 
     #misty_position = addi(misty_position, (0,1))
     #misty_position = addi(misty_position,(random.randrange(-10,10),random.randrange(-10,10)))
@@ -116,6 +145,7 @@ while running:
         alwaysOnTop()
     time.sleep(0.02)
     tick += 1
+
     pass
 
 pygame.quit()
