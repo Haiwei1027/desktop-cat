@@ -84,6 +84,7 @@ misty_position = muli(window_size,0.5)
 misty_velocity = (70,70)
 
 running = True
+tick = 0
 while running:
     screen.fill(transparent)
     
@@ -97,15 +98,17 @@ while running:
     #misty_position = addi(misty_position,(random.randrange(-10,10),random.randrange(-10,10)))
     misty_position = addi(misty_position, misty_velocity)
     if misty_position[1] + misty_size[1] > window_size[1] or misty_position[1] < 0:
-        misty_velocity = (misty_velocity[0], -misty_velocity[1])
+        misty_velocity = (misty_velocity[0]+random.randrange(-5,5), -misty_velocity[1])
         pass
     if misty_position[0] + misty_size[0] > window_size[0] or misty_position[0] < 0:
-        misty_velocity = (-misty_velocity[0], misty_velocity[1])
+        misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
         pass
     # Update the display
     pygame.display.flip()
-    alwaysOnTop()
+    if tick % 10 == 0:
+        alwaysOnTop()
     time.sleep(0.02)
+    tick += 1
     pass
 
 pygame.quit()
