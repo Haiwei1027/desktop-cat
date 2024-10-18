@@ -78,6 +78,11 @@ def misty_sleep():
     cat_image = pygame.transform.scale_by(cat_image, 0.05)
     return cat_image
 
+def misty_move():
+    cat_image = pygame.image.load("photos/h.png").convert_alpha()
+    cat_image = pygame.transform.scale_by(cat_image, 0.4)
+    return cat_image
+
 hwnd = pygame.display.get_wm_info()["window"]
 win32gui.SetWindowLong(hwnd, win32con.GWL_EXSTYLE,
                        win32gui.GetWindowLong(hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
@@ -90,55 +95,63 @@ misty_velocity = (3,1)
 
 running = True
 tick = 0
-mistySleepy = False
+mistyAction = "sit"
 while running:
     screen.fill(transparent)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
     # Blit the cat image onto the screen
-    if mistySleepy:
+    if mistyAction == "sleep":
         cat_image = misty_sleep()
         misty_size = (cat_image.get_width(),cat_image.get_height())   
         screen.blit(cat_image, misty_position) 
 
-        if random.randint(0, 1000) == 9:
-            mistySleepy = False
-    else:
-        cat_image = misty_sat()
+        if random.randint(0, 100) == 9:
+            mistyAction = "sleep"
+
+    elif mistyAction == "move":
+        cat_image = misty_move()
         misty_size = (cat_image.get_width(),cat_image.get_height())        
         screen.blit(cat_image, misty_position)
 
-        #make misty randomly have a nap
-        if random.randint(0, 1000) == 9:
-            mistySleepy = True
+        #make misty randomly have a sit
+        if random.randint(0, 100) == 9:
+            mistyAction = "sit"
 
+        #misty_position = addi(misty_position, (0,1))
         #misty_position = addi(misty_position,(random.randrange(-10,10),random.randrange(-10,10)))
         misty_position = addi(misty_position, misty_velocity)
         if misty_position[1] + misty_size[1] > window_size[1] or misty_position[1] < 0:
             misty_velocity = (misty_velocity[0]+random.randrange(-5,5), -misty_velocity[1])
+            if misty_position[1] > window_size[1]/2:
+                misty_position = (misty_position[0], window_size[1]-misty_size[1])
+            else:
+                misty_position = (misty_position[0], 0)
             pass
         if misty_position[0] + misty_size[0] > window_size[0] or misty_position[0] < 0:
             misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
-            pass
+            if misty_position[0] > window_size[0]/2:
+                misty_position = (window_size[0]-misty_size[0], misty_position[1])
+            else:
+                misty_position = (0, misty_position[1])
+    
+    elif mistyAction == "sit":
+        cat_image = misty_sat()
+        misty_size = (cat_image.get_width(),cat_image.get_height())        
+        screen.blit(cat_image, misty_position)
 
-    #misty_position = addi(misty_position, (0,1))
-    #misty_position = addi(misty_position,(random.randrange(-10,10),random.randrange(-10,10)))
-    misty_position = addi(misty_position, misty_velocity)
-    if misty_position[1] + misty_size[1] > window_size[1] or misty_position[1] < 0:
-        misty_velocity = (misty_velocity[0]+random.randrange(-5,5), -misty_velocity[1])
-        if misty_position[1] > window_size[1]/2:
-            misty_position = (misty_position[0], window_size[1]-misty_size[1])
-        else:
-            misty_position = (misty_position[0], 0)
-        pass
-    if misty_position[0] + misty_size[0] > window_size[0] or misty_position[0] < 0:
-        misty_velocity = (-misty_velocity[0], misty_velocity[1]+random.randrange(-5,5))
-        if misty_position[0] > window_size[0]/2:
-            misty_position = (window_size[0]-misty_size[0], misty_position[1])
-        else:
-            misty_position = (0, misty_position[1])
+        #make misty randomly have a sleep
+        if random.randint(0, 100) == 9:
+            mistyAction = "sleep"
+
+        #make misty randomly have a move
+        if random.randint(0, 100) == 9:
+            mistyAction = "move"
+
+
     # Update the display
     pygame.display.flip()
     if tick % 10 == 0:
