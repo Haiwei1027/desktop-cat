@@ -13,6 +13,7 @@ class Entity:
     
     def render(self, screen):
         # draw entity onto the screen
+        self.animated_sprite.render()
         screen.blit(self.animated_sprite.surface, self.position)
         pass
     pass
