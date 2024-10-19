@@ -28,7 +28,7 @@ class AnimatedSprite:
         w_scale,h_scale = (self.surface.get_width(), self.surface.get_height())
         w_scale /= img.get_width()
         h_scale /= img.get_height()
-        bigger_scale = max(w_scale,h_scale)
+        bigger_scale = 1-max(1-w_scale,1-h_scale)
         img = pygame.transform.scale_by(img, bigger_scale)
         self.surface.blit(img, (0,0))
         pass
