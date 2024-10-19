@@ -5,6 +5,7 @@ class ResourceLoader:
     resources = {}
     
     def load_images(path):
+        # load all .png in folder path to resources dictionary
         for filename in os.listdir(path):
             if filename.endswith(".png"):
                 image_path = os.path.join(path, filename)
@@ -13,3 +14,4 @@ class ResourceLoader:
                 pass
             pass
         pass
+    pass
