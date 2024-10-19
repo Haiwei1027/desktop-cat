@@ -1,7 +1,8 @@
 import pygame
 import time
-from window_manager import WindowManager
-from vector import *
+
+from source.window_manager import WindowManager
+from source.vector import *
 
 class PetApp:
 

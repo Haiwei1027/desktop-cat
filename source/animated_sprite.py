@@ -13,10 +13,6 @@ class AnimatedSprite:
     def update(self):
         # update animation states
         
-        # TODO get animation
-        
-        # TODO blit sprite onto surface
-        
         # TODO update pointer with looping
         
         
@@ -24,4 +20,8 @@ class AnimatedSprite:
     
     def render(self):
         # update surface with image
+        
+        # TODO get animation
+        
+        # TODO blit sprite onto surface
         pass
