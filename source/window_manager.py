@@ -5,9 +5,10 @@ import win32api
 
 class WindowManager:
     
-    def __init__(self, transparent=(0,2,0)):
+    TRANSPARENT = (0,2,0)
+    
+    def __init__(self):
         self.hwnd = pygame.display.get_wm_info()["window"]
-        self.transparent = transparent
         self.display_size = WindowManager.getScreenSize()
         pass
     
@@ -52,6 +53,6 @@ class WindowManager:
     def makeWindowTransparent(self):
         win32gui.SetWindowLong(self.hwnd, win32con.GWL_EXSTYLE, win32gui.GetWindowLong(self.hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
         # set window transparency color
-        win32gui.SetLayeredWindowAttributes(self.hwnd, win32api.RGB(*self.transparent), 0, win32con.LWA_COLORKEY)
+        win32gui.SetLayeredWindowAttributes(self.hwnd, win32api.RGB(*WindowManager.TRANSPARENT), 0, win32con.LWA_COLORKEY)
         pass
     pass
