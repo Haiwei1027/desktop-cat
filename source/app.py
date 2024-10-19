@@ -40,6 +40,10 @@ class PetApp:
                 pos = event.pos
                 button = event.button
                 print(f"pressed {button} at {pos}")
+                for entity in self.entities:
+                    if entity.contains(pos):
+                        entity.click()
+                
             pass
         pass
     

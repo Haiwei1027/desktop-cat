@@ -6,6 +6,7 @@ class AnimatedSprite:
     
     def __init__(self, width, height):
         self.surface = Surface((width, height))
+        self.size = (width, height)
         # example format {"misty_sleep":["misty_sleep1","misty_sleep2","misty_sleep3"]}
         # sprite should correspond with ResourceLoader's loaded resources
         self.animation_tracks = {}
