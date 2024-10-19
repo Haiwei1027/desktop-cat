@@ -8,11 +8,12 @@ class PetApp:
 
     def __init__(self):
         pygame.init()
+        self.screen = pygame.display.set_mode(WindowManager.getScreenSize(), pygame.NOFRAME | pygame.SRCALPHA)
         self.window_manager = WindowManager()
-        self.screen = pygame.display.set_mode(self.window_manager.window_size, pygame.NOFRAME | pygame.SRCALPHA)
         self.running = True
         self.tick = 0
         self.fps = 30
+        self.window_manager.makeWindowTransparent()
         pass
     
     def handle_events(self, event):
@@ -29,15 +30,14 @@ class PetApp:
         pass
     
     def mainloop(self):
-        self.running = True
         while self.running:
-            start_time = time.process_time
-            self.screen.fill(WindowManager.transparent)
+            start_time = time.process_time()
+            self.screen.fill(self.window_manager.transparent)
             
             pygame.display.flip()
             if self.tick % 10 == 0:
                 self.window_manager.putAppOnTop()
-            frame_duration = time.process_time - start_time
+            frame_duration = time.process_time() - start_time
             if frame_duration < 1/self.fps:
                 time.sleep(1/self.fps-frame_duration)
             self.tick += 1

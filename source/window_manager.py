@@ -8,9 +8,13 @@ class WindowManager:
     def __init__(self, transparent=(0,2,0)):
         self.hwnd = pygame.display.get_wm_info()["window"]
         self.transparent = transparent
-        info = pygame.display.Info()
-        self.window_size = (info.current_w,info.current_h)
+        self.display_size = WindowManager.getScreenSize()
         pass
+    
+    def getScreenSize():
+        info = pygame.display.Info()
+        display_size = (info.current_w,info.current_h)
+        return display_size
     
     def isValidWindow(self, hWnd):
         '''Return True iff given window is a real Windows application window.'''
@@ -48,6 +52,6 @@ class WindowManager:
     def makeWindowTransparent(self):
         win32gui.SetWindowLong(self.hwnd, win32con.GWL_EXSTYLE, win32gui.GetWindowLong(self.hwnd, win32con.GWL_EXSTYLE) | win32con.WS_EX_LAYERED)
         # set window transparency color
-        win32gui.SetLayeredWindowAttributes(self.hwnd, win32api.RGB(*WindowManager.transparent), 0, win32con.LWA_COLORKEY)
+        win32gui.SetLayeredWindowAttributes(self.hwnd, win32api.RGB(*self.transparent), 0, win32con.LWA_COLORKEY)
         pass
     pass
