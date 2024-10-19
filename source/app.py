@@ -43,6 +43,12 @@ class PetApp:
                 for entity in self.entities:
                     if entity.contains(pos):
                         entity.click()
+                        pass
+                    pass
+            elif event.type == pygame.MOUSEMOTION:
+                pos = event.pos
+                print(f"moved at {pos}")
+                #self.entities[0].position = subi(pos, divi(self.entities[0].animated_sprite.size,2))
                 
             pass
         pass
@@ -79,6 +85,8 @@ class PetApp:
             self.handle_events()
             self.update()
             self.render()
+
+           # pygame.event.set_grab(True) # Keeps the cursor within the pygame window
             
             # maintains a consistent frame rate
             frame_duration = time.process_time() - start_time

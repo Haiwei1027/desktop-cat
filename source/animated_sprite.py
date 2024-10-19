@@ -2,6 +2,8 @@ from pygame.surface import Surface
 from source.window_manager import WindowManager
 from source.resource_loader import ResourceLoader
 import pygame
+import random
+
 class AnimatedSprite:
     
     def __init__(self, width, height):
@@ -35,6 +37,9 @@ class AnimatedSprite:
         h_scale /= img.get_height()
         bigger_scale = 1-max(1-w_scale,1-h_scale)
         img = pygame.transform.scale_by(img, bigger_scale)
+
+        #img = pygame.transform.rotate(img, random.randint(0,50))
+
         # update surface with image
         self.surface.blit(img, (0,0))
         pass

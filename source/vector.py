@@ -14,3 +14,9 @@ def divi(vector, scale):
 def doti(vector_a, vector_b):
     product = lambda v: v[0] * v[1] 
     return sum(tuple(product(s) for s in zip(vector_a,vector_b)))
+
+def setX(vector, x):
+    return (x, vector[1])
+
+def setY(vector, y):
+    return (vector[0], y)
