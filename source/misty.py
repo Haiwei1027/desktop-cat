@@ -37,17 +37,12 @@ class Misty(Entity):
             bottom_x,bottom_y = addi(self.position, self.animated_sprite.size)
             if top_x < 0:
                 self.position = setX(self.position, 0)
-                print("touched left")
             elif bottom_x > w_width:
                 self.position = setX(self.position, w_width - size_x)
-                print("touch right")
             if top_y < 0:
-                print("touched top")
                 self.position = setY(self.position, 0)
             elif bottom_y > w_height:
-                print("touched bottom")
                 self.position = setY(self.position, w_height - size_y)
-            print(self.position)
             #make misty randomly have a sit
             if random.randint(0, 1000) == 9:
                 self.action = "sat"
