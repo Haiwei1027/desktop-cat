@@ -40,6 +40,7 @@ class PetApp:
         
         # load all .png from resources/photos
         ResourceLoader.load_images("resources/photos")
+        ResourceLoader.load_sounds("resources/sounds")
         
         # instance misty and add to entity list
         misty = Misty(position=(500,500))
@@ -73,6 +74,8 @@ class PetApp:
         for entity in self.entities:
             entity.render(self.screen)
             pass
+        
+        ResourceLoader.resources["little_meow"].play()
         
         for x in range(0,1970,100):
             pygame.draw.line(self.screen, (0,255,0), (x,0), (x,1080))

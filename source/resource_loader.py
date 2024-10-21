@@ -14,4 +14,16 @@ class ResourceLoader:
                 pass
             pass
         pass
+    
+    def load_sounds(path):
+        for filename in os.listdir(path):
+            if filename.endswith(".wav"):
+                sound_path = os.path.join(path, filename)
+                sound_name = os.path.splitext(filename)[0]
+                print(sound_name)
+                ResourceLoader.resources[sound_name] = pygame.mixer.Sound(sound_path)
+                pass
+            pass
+        pass
+    
     pass
