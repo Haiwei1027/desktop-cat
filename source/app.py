@@ -9,19 +9,21 @@ from source.misty import Misty
 from pynput import mouse, keyboard
 from threading import Thread, Condition
 
-stop_condition = Condition()
+stop_mouse_condition = Condition()
+stop_keyboard_condition = Condition()
+
 
 def mouse_listener_thread(app):
     with mouse.Listener(on_move=app.on_mouse_move, on_click=app.on_mouse_click) as listener:
-        with stop_condition:
-            stop_condition.wait()
+        with stop_mouse_condition:
+            stop_mouse_condition.wait()
         listener.stop()
     pass
 
 def keyboard_listener_thread(app):
     with keyboard.Listener(on_press=app.on_key_press, on_release=app.on_key_release) as listener:
-        with stop_condition:
-            stop_condition.wait()
+        with stop_keyboard_condition:
+            stop_keyboard_condition.wait()
         listener.stop()
     pass
 
@@ -121,7 +123,9 @@ class PetApp:
     def quit(self):
         # stop the app
         pygame.quit()
-        with stop_condition:
-            stop_condition.notify()
+        with stop_keyboard_condition:
+            stop_keyboard_condition.notify()
+        with stop_mouse_condition:
+            stop_mouse_condition.notify()
         self.running = False
         pass
