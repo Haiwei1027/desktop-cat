@@ -12,11 +12,11 @@ class InputManager:
     held_mouse_buttons = set()
     held_keys = set()
     
-    def __init__(self, app):
+    def __init__(self):
         self.stop_mouse_condition = Condition()
         self.stop_keyboard_condition = Condition()
-        Thread(target=self.mouse_listener_thread,args=(app,self.stop_mouse_condition,)).start()
-        Thread(target=self.keyboard_listener_thread,args=(app,self.stop_keyboard_condition,)).start()
+        Thread(target=self.mouse_listener_thread,args=(self.stop_mouse_condition,)).start()
+        Thread(target=self.keyboard_listener_thread,args=(self.stop_keyboard_condition,)).start()
         pass
     
     def stop(self):
@@ -28,8 +28,8 @@ class InputManager:
             pass
         pass
     
-    def mouse_listener_thread(app, stop_condition):
-        with mouse.Listener(on_move=app.on_mouse_move, on_click=app.on_mouse_click) as listener:
+    def mouse_listener_thread(self, stop_condition):
+        with mouse.Listener(on_move=self.on_mouse_move, on_click=self.on_mouse_press) as listener:
             with stop_condition:
                 stop_condition.wait()
                 pass
@@ -37,8 +37,8 @@ class InputManager:
             pass
         pass
 
-    def keyboard_listener_thread(app, stop_condition):
-        with keyboard.Listener(on_press=app.on_key_press, on_release=app.on_key_release) as listener:
+    def keyboard_listener_thread(self, stop_condition):
+        with keyboard.Listener(on_press=self.on_key_press, on_release=self.on_key_release) as listener:
             with stop_condition:
                 stop_condition.wait()
                 pass
@@ -57,15 +57,16 @@ class InputManager:
             InputManager.held_mouse_buttons.add(button)
             for subscriber in InputManager.on_mouse_press_event:
                 try:
-                    subscriber((x,y),button,press_or_release)
+                    subscriber((x,y),button)
                 except Exception as e:
                     print(f"Error while passing click press event: {e}")
                 pass
         else:
-            InputManager.held_mouse_buttons.remove(button)
+            if button in InputManager.held_mouse_buttons:
+                InputManager.held_mouse_buttons.remove(button)
             for subscriber in InputManager.on_mouse_release_event:
                 try:
-                    subscriber((x,y),button,press_or_release)
+                    subscriber((x,y),button)
                 except Exception as e:
                     print(f"Error while passing click release event: {e}")
                 pass
@@ -73,7 +74,8 @@ class InputManager:
     
     def on_key_release(self, keycode):
         #print(f"released {keycode}")
-        InputManager.held_keys.remove(keycode)
+        if keycode in InputManager.held_keys:
+            InputManager.held_keys.remove(keycode)
         for subscriber in InputManager.on_key_release_event:
             try:
                 subscriber(keycode)

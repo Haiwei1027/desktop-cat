@@ -4,6 +4,7 @@ from source.resource_loader import ResourceLoader
 from source.animated_sprite import AnimatedSprite
 from source.vector import *
 from source.window_manager import WindowManager
+from source.input_manager import InputManager
 import random
 
 class Misty(Entity):
@@ -17,6 +18,9 @@ class Misty(Entity):
         animated_sprite.animation = "sat"
         super().__init__("Misty", animated_sprite,position=position)
         self.action = "sat"
+        
+        InputManager.on_mouse_press_event.append(self.on_click)
+        
         pass
     
     def update(self):
@@ -61,10 +65,14 @@ class Misty(Entity):
         else:
             raise Exception(f"Unknown misty action {self.action}")
         pass
-
-    def click(self):
-        if self.action == "sleep":
-            self.action = "awake" 
+    
+    def on_click(self,pos,button):
+        if self.contains(pos):
+            print("why u click misty")
+            if self.action == "sleep":
+                self.action = "awake" 
+            pass
         pass
+    
     pass
     

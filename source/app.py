@@ -41,7 +41,7 @@ class PetApp:
             entity.update()
             pass
         
-        # 
+        # handle window quit event
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.quit()
@@ -68,7 +68,6 @@ class PetApp:
             while self.running:
                 start_time = time.process_time()
                 
-                self.handle_events()
                 self.update()
                 self.render()
 
