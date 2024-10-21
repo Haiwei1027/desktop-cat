@@ -32,17 +32,7 @@ class Misty(Entity):
             self.position = addi(self.position, (random.randint(-10,10),random.randint(-10,10)))
 
             w_width,w_height = WindowManager.getScreenSize()
-            top_x,top_y = self.position
-            size_x, size_y = self.animated_sprite.size
-            bottom_x,bottom_y = addi(self.position, self.animated_sprite.size)
-            if top_x < 0:
-                self.position = setX(self.position, 0)
-            elif bottom_x > w_width:
-                self.position = setX(self.position, w_width - size_x)
-            if top_y < 0:
-                self.position = setY(self.position, 0)
-            elif bottom_y > w_height:
-                self.position = setY(self.position, w_height - size_y)
+            self.confine((0,0,w_width,w_height))
             #make misty randomly have a sit
             if random.randint(0, 1000) == 9:
                 self.action = "sat"
