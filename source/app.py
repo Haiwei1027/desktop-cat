@@ -7,16 +7,31 @@ from source.resource_loader import ResourceLoader
 from source.misty import Misty
 
 from source.input_manager import InputManager
-
+import ctypes
 
 class PetApp:
 
     def __init__(self):
         # setup the app and the window
+        
+        # Query DPI Awareness (Windows 10 and 8)
+        awareness = ctypes.c_int()
+        errorCode = ctypes.windll.shcore.GetProcessDpiAwareness(0, ctypes.byref(awareness))
+        print(awareness.value)
+
+        # Set DPI Awareness  (Windows 10 and 8)
+        errorCode = ctypes.windll.shcore.SetProcessDpiAwareness(2)
+        # the argument is the awareness level, which can be 0, 1 or 2:
+        # for 1-to-1 pixel control I seem to need it to be non-zero (I'm using level 2)
+
+        # Set DPI Awareness  (Windows 7 and Vista)
+        success = ctypes.windll.user32.SetProcessDPIAware()
+        
         pygame.init()
+        print(WindowManager.getScreenSize())
+        self.input_manager = InputManager()
         self.screen = pygame.display.set_mode(WindowManager.getScreenSize(), pygame.NOFRAME | pygame.SRCALPHA)
         self.window_manager = WindowManager()
-        self.input_manager = InputManager()
         self.running = True
         self.tick = 0
         self.fps = 30
@@ -27,7 +42,7 @@ class PetApp:
         ResourceLoader.load_images("resources/photos")
         
         # instance misty and add to entity list
-        misty = Misty(position=divi(self.window_manager.display_size,2))
+        misty = Misty(position=(500,500))
         self.entities.append(misty)
         pass
     
@@ -59,6 +74,8 @@ class PetApp:
             entity.render(self.screen)
             pass
         
+        for x in range(0,1970,100):
+            pygame.draw.line(self.screen, (0,255,0), (x,0), (x,1080))
         # update the screen
         pygame.display.flip()
         pass

@@ -22,6 +22,9 @@ class Entity:
     def contains(self, position):
         top_left = self.position
         bottom_right = addi(self.position, self.animated_sprite.size)
+        print(position)
+        print(top_left, bottom_right)
+        #print([position[x] < bottom_right[x] and position[x] > top_left[x] for x in range(2)])
         return all([position[x] < bottom_right[x] and position[x] > top_left[x] for x in range(2)])
     
     def confine(self, bound):

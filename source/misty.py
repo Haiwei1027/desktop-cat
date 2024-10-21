@@ -33,7 +33,7 @@ class Misty(Entity):
 
         elif self.action == "move":
             self.animated_sprite.animation = "move"
-            self.position = addi(self.position, (random.randint(-10,10),random.randint(-10,10)))
+            #self.position = addi(self.position, (random.randint(-10,10),random.randint(-10,10)))
 
             w_width,w_height = WindowManager.getScreenSize()
             self.confine((0,0,w_width,w_height))

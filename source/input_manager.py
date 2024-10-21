@@ -1,7 +1,6 @@
 from threading import Thread, Condition
 from pynput import mouse, keyboard
 
-
 class InputManager:
     
     on_key_press_event = []
@@ -15,6 +14,7 @@ class InputManager:
     def __init__(self):
         self.stop_mouse_condition = Condition()
         self.stop_keyboard_condition = Condition()
+        
         Thread(target=self.mouse_listener_thread,args=(self.stop_mouse_condition,)).start()
         Thread(target=self.keyboard_listener_thread,args=(self.stop_keyboard_condition,)).start()
         pass
