@@ -19,7 +19,7 @@ class Misty(Entity):
         animated_sprite.animation = "sat"
         super().__init__("Misty", animated_sprite,position=position)
         self.action = "sat"
-        
+        self.destination = (0,0)
         InputManager.on_mouse_press_event.append(self.on_click)
         
         pass
@@ -36,41 +36,50 @@ class Misty(Entity):
 
         elif self.action == "move":
             self.animated_sprite.animation = "move"
-            #self.position = addi(self.position, (random.randint(-10,10),random.randint(-10,10)))
-            
-            w_width,w_height = WindowManager.getScreenSize()
-            self.confine((0,0,w_width,w_height))
-            #make misty randomly have a sit
-            if random.randint(0, 200) == 9:
+            delta = subi(self.destination, self.position)
+
+            if magi(delta) > 20:
+                self.position = addi(self.position, muli(norm(delta),10))
+                SoundManager.play_sound("steps")
+                w_width,w_height = WindowManager.getScreenSize()
+                self.confine((0,0,w_width,w_height))
+                #make misty randomly have a sit
+                if random.randint(0, 200) == 9:
+                    self.action = "sat"
+                    SoundManager.stop_sound("steps")
+            else:
                 self.action = "sat"
+                SoundManager.stop_sound("steps")
 
         elif self.action == "sat":
             self.animated_sprite.animation = "sat"
-            #ResourceLoader.resources["pur"].play()
+            SoundManager.play_sound("pur")
             #make misty randomly have a move
             if random.randint(0, 100) == 9:
                 self.action = "move"
-                #ResourceLoader.resources["pur"].play()
+                self.destination = (random.randrange(0,WindowManager.getScreenSize()[0]), random.randrange(0,WindowManager.getScreenSize()[1]))
+                SoundManager.stop_sound("pur")
             #make misty randomly have a sleep
             if random.randint(0, 100) == 9:
                 self.action = "sleep"
-                #ResourceLoader.resources["pur"].play()
+                SoundManager.stop_sound("pur")
 
         elif self.action == "awake":
             self.animated_sprite.animation = "awake"
-            #ResourceLoader.resources["little_meow"].play()
+            SoundManager.play_sound("little_meow")
             #make misty randomly have a move
-            if random.randint(0, 200) == 9:
+            if random.randint(0, 150) == 9:
                 self.action = "move"
-                #ResourceLoader.resources["little_meow"].stop()
+                self.destination = (random.randrange(0,WindowManager.getScreenSize()[0]), random.randrange(0,WindowManager.getScreenSize()[1]))
+                SoundManager.stop_sound("little_meow")
             #make misty randomly have a sleep
-            if random.randint(0, 200) == 9:
+            if random.randint(0, 150) == 9:
                 self.action = "sleep"
-                #ResourceLoader.resources["little_meow"].stop()
+                SoundManager.stop_sound("little_meow")
                 #make misty randomly have a sit
-            if random.randint(0, 200) == 9:
+            if random.randint(0, 150) == 9:
                 self.action = "sat"
-                #ResourceLoader.resources["little_meow"].stop()
+                SoundManager.stop_sound("little_meow")
 
         else:
             raise Exception(f"Unknown misty action {self.action}")
