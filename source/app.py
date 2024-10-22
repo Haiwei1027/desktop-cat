@@ -75,10 +75,8 @@ class PetApp:
             entity.render(self.screen)
             pass
         
-        ResourceLoader.resources["little_meow"].play()
+        #ResourceLoader.resources["little_meow"].play()
         
-        for x in range(0,1970,100):
-            pygame.draw.line(self.screen, (0,255,0), (x,0), (x,1080))
         # update the screen
         pygame.display.flip()
         pass

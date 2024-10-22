@@ -17,7 +17,7 @@ class ResourceLoader:
     
     def load_sounds(path):
         for filename in os.listdir(path):
-            if filename.endswith(".wav"):
+            if filename.endswith(".wav") or filename.endswith(".mp3"):
                 sound_path = os.path.join(path, filename)
                 sound_name = os.path.splitext(filename)[0]
                 print(sound_name)
