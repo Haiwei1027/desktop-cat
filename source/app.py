@@ -8,6 +8,7 @@ from source.misty import Misty
 
 from source.input_manager import InputManager
 import ctypes
+import random
 
 class PetApp:
 
@@ -17,7 +18,6 @@ class PetApp:
         # Query DPI Awareness (Windows 10 and 8)
         awareness = ctypes.c_int()
         errorCode = ctypes.windll.shcore.GetProcessDpiAwareness(0, ctypes.byref(awareness))
-        print(awareness.value)
 
         # Set DPI Awareness  (Windows 10 and 8)
         errorCode = ctypes.windll.shcore.SetProcessDpiAwareness(2)
@@ -28,9 +28,8 @@ class PetApp:
         success = ctypes.windll.user32.SetProcessDPIAware()
         
         pygame.init()
-        print(WindowManager.getScreenSize())
         self.input_manager = InputManager()
-        self.screen = pygame.display.set_mode(WindowManager.getScreenSize(), pygame.NOFRAME | pygame.SRCALPHA)
+        self.screen = pygame.display.set_mode(subi(WindowManager.getScreenSize(),(0,32)), pygame.NOFRAME | pygame.SRCALPHA)
         self.window_manager = WindowManager()
         self.running = True
         self.tick = 0
@@ -75,7 +74,6 @@ class PetApp:
             entity.render(self.screen)
             pass
         
-        #ResourceLoader.resources["little_meow"].play()
         
         # update the screen
         pygame.display.flip()

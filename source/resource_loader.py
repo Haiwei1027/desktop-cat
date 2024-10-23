@@ -10,6 +10,7 @@ class ResourceLoader:
             if filename.endswith(".png"):
                 image_path = os.path.join(path, filename)
                 image_name = os.path.splitext(filename)[0]
+                print(f"loaded image: {image_name}")
                 ResourceLoader.resources[image_name] = pygame.image.load(image_path).convert_alpha()
                 pass
             pass
@@ -20,7 +21,7 @@ class ResourceLoader:
             if filename.endswith(".wav") or filename.endswith(".mp3"):
                 sound_path = os.path.join(path, filename)
                 sound_name = os.path.splitext(filename)[0]
-                print(sound_name)
+                print(f"loaded sound: {sound_name}")
                 ResourceLoader.resources[sound_name] = pygame.mixer.Sound(sound_path)
                 pass
             pass

@@ -10,7 +10,7 @@ class SoundManager:
         if name not in SoundManager.current_sounds:
             SoundManager.current_sounds.append(name)
             ResourceLoader.resources.get(name).play()
-            print(SoundManager.current_sounds)
+            #print(SoundManager.current_sounds)
             pass
         pass
 
@@ -19,7 +19,7 @@ class SoundManager:
         if name in SoundManager.current_sounds:
             SoundManager.current_sounds.remove(name)
             ResourceLoader.resources.get(name).stop()
-            print(SoundManager.current_sounds)
+            #print(SoundManager.current_sounds)
             pass
         pass
 

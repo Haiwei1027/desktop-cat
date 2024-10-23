@@ -47,7 +47,8 @@ class WindowManager:
         return windows
 
     def putAppOnTop(self):
-        win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, 0,0,0,0, win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
+        #win32con.SWP_NOMOVE | 
+        win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, 0,0,0,0, win32con.SWP_NOSIZE)
         pass
 
     def makeWindowTransparent(self):
