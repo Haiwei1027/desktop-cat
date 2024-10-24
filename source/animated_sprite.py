@@ -16,13 +16,38 @@ class AnimatedSprite:
         self.animation = ""
         # current frame in the current animation
         self.pointer = 0
+        
+        self.on_finish_event = []
+        pass
+    
+    def add_track(self, name, timed_track):
+        compiled_track = []
+        for keyframe in timed_track:
+            img,duration = keyframe
+            for i in range(duration):
+                compiled_track.append(img)
+        self.animation_tracks[name] = compiled_track
+        pass
+    
+    def set_animation(self, new_animation):
+        self.animation = new_animation
+        self.pointer = 0
         pass
     
     def update(self):
         # update animation states
         
         # TODO update pointer with looping
+        self.pointer += 1
+        track = self.animation_tracks[self.animation]
         
+        if self.pointer >= len(track):
+            self.pointer = 0
+            try:
+                for subscriber in self.on_finish_event:
+                    subscriber()
+            except Exception as e:
+                print(e)
         pass
     
     def render(self):

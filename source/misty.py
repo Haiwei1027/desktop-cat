@@ -12,16 +12,16 @@ class Misty(Entity):
     
     def __init__(self, position=(0,0)):
         animated_sprite = AnimatedSprite(256,256)
-        animated_sprite.animation_tracks["sat"] = ["misty_sat"]
-        animated_sprite.animation_tracks["move"] = ["misty_move"]
-        animated_sprite.animation_tracks["sleep"] = ["misty_sleep"]
-        animated_sprite.animation_tracks["awake"] = ["misty_awake"]
+        animated_sprite.add_track("sat", [("misty_sat",12),("misty_sleep",12)])
+        animated_sprite.add_track("move", [("misty_move",24)])
+        animated_sprite.add_track("sleep", [("misty_sleep",24)])
+        animated_sprite.add_track("awake", [("misty_awake",12)])
         animated_sprite.animation = "sat"
         super().__init__("Misty", animated_sprite,position=position)
         self.action = "sat"
         self.destination = (0,0)
         InputManager.on_mouse_press_event.append(self.on_click)
-        
+        self.animated_sprite.on_finish_event.append(self.on_animation_finish)
         pass
     
     def update(self):
@@ -92,6 +92,10 @@ class Misty(Entity):
                 self.action = "awake"
                 SoundManager.stop_sound("snore")
             pass
+        pass
+    
+    def on_animation_finish(self):
+        print("anim finish")
         pass
     
     pass

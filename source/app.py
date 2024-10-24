@@ -33,7 +33,7 @@ class PetApp:
         self.window_manager = WindowManager()
         self.running = True
         self.tick = 0
-        self.fps = 30
+        self.fps = 24
         self.entities = []
         self.window_manager.makeWindowTransparent()
         
